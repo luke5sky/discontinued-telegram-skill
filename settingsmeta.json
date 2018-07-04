@@ -8,7 +8,7 @@
                     {
                         "type": "label",
                         "value": "",
-                        "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>"
+                        "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>Connect up to 4 User with their Chat ID.<p/>To get the Chat ID go to https://api.telegram.org/bot<yourtoken>/getUpdates or fill in the Bot Token below (save) and write anything to your bot, it will give you your Chat ID.<p/>"
                     },
                     {
                         "name": "TeleToken",
@@ -16,6 +16,34 @@
                         "label": "Bot Token",
                         "value": "",
                         "placeholder": "Bot Token"
+                    },
+                    {
+                        "name": "TeleID1",
+                        "type": "Number",
+                        "label": "1. Client ID",
+                        "value": "",
+                        "placeholder": "Client ID"
+                    },
+                    {
+                        "name": "TeleID2",
+                        "type": "Number",
+                        "label": "2. Client ID",
+                        "value": "",
+                        "placeholder": "Client ID"
+                    },
+                    {
+                        "name": "TeleID3",
+                        "type": "Number",
+                        "label": "3. ClientID",
+                        "value": "",
+                        "placeholder": "CLient ID"
+                    },
+                    {
+                        "name": "TeleID4",
+                        "type": "Number",
+                        "label": "4. CLientID",
+                        "value": "",
+                        "placeholder": "Client ID"
                     }
                 ]
             }

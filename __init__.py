@@ -35,8 +35,12 @@ class TelegramSkill(MycroftSkill):
 
     def __init__(self):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
-        witty = 12345678
-        chat_whitelist = [witty,'123']
+
+        user_id1 = self.settings.get('TeleID1', '')
+        user_id2 = self.settings.get('TeleID2', '')
+        user_id3 = self.settings.get('TeleID3', '')
+        user_id4 = self.settings.get('TeleID4', '')
+        chat_whitelist = [user_id1,user_id2,user_id3,user_id4]
 #	    get_intro_message()
 ################################################################################
         def telegramMessages(bot, update):
