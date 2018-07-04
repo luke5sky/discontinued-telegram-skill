@@ -35,7 +35,7 @@ class TelegramSkill(MycroftSkill):
 
     def __init__(self):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
-        witty = 346018160
+        witty = 12345678
         chat_whitelist = [witty,'123']
 #	    get_intro_message()
 ################################################################################
