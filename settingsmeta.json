@@ -1,0 +1,24 @@
+{
+    "name": "Telegram Skill",
+    "skillMetadata": {
+        "sections": [
+            {
+                "name": "Telegram Bot",
+                "fields": [
+                    {
+                        "type": "label",
+                        "value": "",
+                        "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>"
+                    },
+                    {
+                        "name": "TeleToken",
+                        "type": "Text",
+                        "label": "Bot Token",
+                        "value": "",
+                        "placeholder": "Bot Token"
+                    }
+                ]
+            }
+        ]
+    }
+}
