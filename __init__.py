@@ -45,16 +45,13 @@ class TelegramSkill(MycroftSkill):
 ################################################################################
         def telegramMessages(bot, update):
             msg = update.message.text
-            chat_id = update.message.chat_id
+            chat_id = str(update.message.chat_id)
             
             if chat_id in chat_whitelist:
                print("Telegram-Message from User: " + msg)
                uri = 'ws://localhost:8181/core'
                ws = create_connection(uri)
                utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "en-us", "utterances": ["' + msg + '"]}}'
-               
-               if not chat_id in chat_whitelist:
-                  print("WHITECHat_ID is: %d" % chat_id)
                ws.send(utt)
  #              def handle_listener_started(self):
  #                  print("listener started wupdidudl: ")
@@ -74,8 +71,8 @@ class TelegramSkill(MycroftSkill):
                      count = now - mtime
                ws.close()
             else:
-               print("Chat ID is not whitelisted, i don't process it")
-               nowhite = ("This is your ChatID: %d" % chat_id)
+               print("Chat ID " + user_id1 + " is not whitelisted, i don't process it")
+               nowhite = ("This is your ChatID: " + chat_id)
                bot.send_message(chat_id=chat_id, text=nowhite)
 ################################################################################
 
