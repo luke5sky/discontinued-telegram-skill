@@ -8,7 +8,7 @@
                     {
                         "type": "label",
                         "value": "",
-                        "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>Connect up to 4 User with their Chat ID.<p/>To get the Chat ID go to https://api.telegram.org/bot<yourtoken>/getUpdates or fill in the Bot Token below (save) and write anything to your bot, it will give you your Chat ID.<p/>"
+                        "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>Connect up to 4 users with their Chat ID.<p/>To get the Chat ID go to https://api.telegram.org/bot<yourtoken>/getUpdates or fill in the Bot Token below (save) and write anything to your bot, it will give you your Chat ID.<p/>"
                     },
                     {
                         "name": "TeleToken",
@@ -18,11 +18,25 @@
                         "placeholder": "Bot Token"
                     },
                     {
+                        "name": "User1",
+                        "type": "Text",
+                        "label": "1. User",
+                        "value": "",
+                        "placeholder": "Name of User"
+                    },
+                    {
                         "name": "TeleID1",
                         "type": "Number",
                         "label": "1. Client ID",
                         "value": "",
                         "placeholder": "Client ID"
+                    },
+                    {
+                        "name": "User2",
+                        "type": "Text",
+                        "label": "2. User",
+                        "value": "",
+                        "placeholder": "Name of User"
                     },
                     {
                         "name": "TeleID2",
@@ -32,16 +46,30 @@
                         "placeholder": "Client ID"
                     },
                     {
+                        "name": "User3",
+                        "type": "Text",
+                        "label": "3. User",
+                        "value": "",
+                        "placeholder": "Name of User"
+                    },
+                    {
                         "name": "TeleID3",
                         "type": "Number",
-                        "label": "3. ClientID",
+                        "label": "3. Client ID",
                         "value": "",
                         "placeholder": "CLient ID"
                     },
                     {
+                        "name": "User4",
+                        "type": "Text",
+                        "label": "4. User",
+                        "value": "",
+                        "placeholder": "Name of User"
+                    },
+                    {
                         "name": "TeleID4",
                         "type": "Number",
-                        "label": "4. CLientID",
+                        "label": "4. CLient ID",
                         "value": "",
                         "placeholder": "Client ID"
                     }
