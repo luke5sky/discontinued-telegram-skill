@@ -1,16 +1,14 @@
-## What Can You Do
-Tells you what you can do
+## Telegram Skill
+Telegram Skill for MyCroft
 
 ## Description 
-It tells you what you can do with Mycroft (some examples)
-and lists the installed skills (if you want).
+A skill to connect a telegram bot to MyCroft.
 
-Just a simple script but i missed it
+You need to create a telegram bot (via BotFather) and save the Bot Token on home.mycroft.ai under skill settings.
 
-## Examples 
- - "What can you do?"
- - "What can i do?"
- - "What can i ask you?"
+After this restart your MyCroft Unit.
+
+You can now commmunicate with your MyCroft Unit via this bot.
 
 ## Credits 
 Luke5Sky
