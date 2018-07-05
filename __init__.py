@@ -48,9 +48,9 @@ class TelegramSkill(MycroftSkill):
         self.add_event('recognizer_loop:audio_output_start', self.muteHandler)
         user_id1 = self.settings.get('TeleID1', '')
         user_id2 = self.settings.get('TeleID2', '')
-        user_id3 = self.settings.get('TeleID3', '')
-        user_id4 = self.settings.get('TeleID4', '')
-        chat_whitelist = [user_id1,user_id2,user_id3,user_id4]
+        #user_id3 = self.settings.get('TeleID3', '') # makes web-settings too crouded
+        #user_id4 = self.settings.get('TeleID4', '') # makes web-settings too crouded
+        chat_whitelist = [user_id1,user_id2] #,user_id3,user_id4] # makes web-settings too crouded
         # Get Bot Token from settings.json
         UnitName = DeviceApi().get()['name']
         MyCroftDevice1 = self.settings.get('MDevice1','')
@@ -65,24 +65,31 @@ class TelegramSkill(MycroftSkill):
         else:
            logger.info("No or incorrect Device Name specified! Your DeviceName is: " + UnitName + " " + MyCroftDevice1 + " " + MyCroftDevice2)
 
-        def getTelegramMessages(bot, update):
+        def TelegramMessages(bot, update):
             msg = update.message.text
             chat_id = str(update.message.chat_id)
             if chat_id in chat_whitelist:
                logger.info("Telegram-Message from User: " + msg)
                global speak_tele
-             #  speak_tele = 1
+               speak_tele = 1
                self.add_event('speak', responseHandler)
                sendMycroftUtt(msg)
                global global_resp
+               mtime = time.time()
+               count = 0 
                while len(global_resp) < 1:
-                     pass
-            
+               # TODO: make the following go away
+               # Queen - Break free routine: not proud of it, move along 
+                     if count > 5:
+                        count = 0 # just in case
+                        break
+                     now = time.time()
+                     count = now - mtime 
+               # Let's not talk about this again... ever
+
                if len(global_resp) > 1:
                   bot.send_message(chat_id=chat_id, text=global_resp)
                   global_resp = ""
-                  print(speak_tele)
-               speak_tele = 0
             else:
                logger.info("Chat ID " + user_id1 + " is not whitelisted, i don't process it")
                nowhite = ("This is your ChatID: " + chat_id)
@@ -92,32 +99,27 @@ class TelegramSkill(MycroftSkill):
             uri = 'ws://localhost:8181/core'
             ws = create_connection(uri)
             utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "en-us", "utterances": ["' + msg + '"]}}'
-            global speak_tele
-            speak_tele = 1
-            #self.add_event('speak', responseHandler)
             ws.send(utt)
             ws.close()
 
         def responseHandler(message):
             global speak_tele
-            print(speak_tele)
             if speak_tele == 1:
                telresp = message.data.get("utterance")
                logger.info("Response for Telegram-User: " + telresp )
                global global_resp
                global_resp = telresp
-            speak_tele = 0
+               self.remove_event('speak')
             
         # Connection to Telegram API
         self.telegram_updater = Updater(token=bottoken) # get telegram Updates
         self.telegram_dispatcher = self.telegram_updater.dispatcher
-        receive_handler = MessageHandler(Filters.text, getTelegramMessages)
+        receive_handler = MessageHandler(Filters.text, TelegramMessages)
         self.telegram_dispatcher.add_handler(receive_handler)
         self.telegram_updater.start_polling(clean=True) # start clean and look for messages
 
     def muteHandler(self, message):
         global speak_tele
-        print("var ##" + self.mute + "##### %d " % speak_tele )
         if self.mute == 'true' and speak_tele == 1:
            volume_level = self.mixer.getvolume()[0]
            self.mixer.setvolume(0)
@@ -126,13 +128,15 @@ class TelegramSkill(MycroftSkill):
            speak_tele = 0
 
     def shutdown(self): # shutdown routine
-        self.telegram_updater.stop() # stop updater
+        self.telegram_updater.stop() # will stop update and dispatcher
         self.telegram_updater.is_idle = False
         super(TelegramSkill, self).shutdown()
 
     def stop(self):
- #       self.speak_tele = 0
-        pass
+        global speak_tele
+        speak_tele = 0
+        global global_resp 
+        global_resp = ""
 
 def create_skill():
     return TelegramSkill()
