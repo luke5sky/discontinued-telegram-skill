@@ -8,7 +8,7 @@
                     {
                         "type": "label",
                         "value": "",
-                        "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>Connect up to 4 users with their Chat ID.<p/>To get the Chat ID go to https://api.telegram.org/bot<yourtoken>/getUpdates or fill in the Bot Token below (save) and write anything to your bot, it will give you your Chat ID.<p/>"
+                        "label": "Create a Telegram Bot (with BotFather /newbot or /help) and enter the Token here.<p/>Connect up to 2 users with their Chat ID.<p/>To get the Chat ID go to https://api.telegram.org/bot<yourtoken>/getUpdates or fill in the Bot Token below (save) and write anything to your bot, it will give you your Chat ID.<p/>"
                     },
                     {
                       "name": "MuteIt",
