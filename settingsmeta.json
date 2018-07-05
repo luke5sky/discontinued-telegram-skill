@@ -11,11 +11,38 @@
                         "label": "Create a Telegram Bot (with BotFather) and enter the Token here.<p/>Connect up to 4 users with their Chat ID.<p/>To get the Chat ID go to https://api.telegram.org/bot<yourtoken>/getUpdates or fill in the Bot Token below (save) and write anything to your bot, it will give you your Chat ID.<p/>"
                     },
                     {
-                        "name": "TeleToken",
+                      "name": "MuteIt",
+                      "type": "checkbox",
+                      "label": "Mute answears when sending via Telegram",
+                      "value": "false"
+                    },
+                    {
+                        "name": "TeleToken1",
                         "type": "Text",
-                        "label": "Bot Token",
+                        "label": "1. Bot Token",
                         "value": "",
                         "placeholder": "Bot Token"
+                    },
+                    {
+                        "name": "MDevice1",
+                        "type": "Text",
+                        "label": "1. MyCroft Unit",
+                        "value": "",
+                        "placeholder": "MyCroft Device Name"
+                    },
+                    {
+                        "name": "TeleToken2",
+                        "type": "Text",
+                        "label": "2. Bot Token",
+                        "value": "",
+                        "placeholder": "Bot Token"
+                    },
+                    {
+                        "name": "MDevice2",
+                        "type": "Text",
+                        "label": "2. MyCroft Unit",
+                        "value": "",
+                        "placeholder": "MyCroft Device Name"
                     },
                     {
                         "name": "User1",
@@ -57,7 +84,7 @@
                         "type": "Number",
                         "label": "3. Client ID",
                         "value": "",
-                        "placeholder": "CLient ID"
+                        "placeholder": "Client ID"
                     },
                     {
                         "name": "User4",
@@ -69,7 +96,7 @@
                     {
                         "name": "TeleID4",
                         "type": "Number",
-                        "label": "4. CLient ID",
+                        "label": "4. Client ID",
                         "value": "",
                         "placeholder": "Client ID"
                     }
