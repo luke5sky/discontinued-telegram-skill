@@ -15,12 +15,13 @@
 # TODO: Documentation
 
 import os
+
 import re
 import logging
 import sys
+import telegram
 import time
 import threading
-import telegram
 
 from alsaaudio import Mixer
 from adapt.intent import IntentBuilder
@@ -49,7 +50,6 @@ class TelegramSkill(MycroftSkill):
         self.mixer = Mixer()
         self.add_event('telegram-skill:response', self.sendHandler)
         self.add_event('speak', self.responseHandler)
-        self.add_event('recognizer_loop:utterance', self.uttHandler)
         user_id1 = self.settings.get('TeleID1', '')
         user_id2 = self.settings.get('TeleID2', '')
         #user_id3 = self.settings.get('TeleID3', '') # makes web-settings too crouded
