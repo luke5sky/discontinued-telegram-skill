@@ -14,18 +14,11 @@
 
 # TODO: Documentation
 
-import os
 
-#import re
-import logging
-import sys
 import telegram
-import time
-import threading
 
 from alsaaudio import Mixer
-from adapt.intent import IntentBuilder
-from mycroft.skills.core import MycroftSkill, intent_handler
+from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import LOG
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
 from websocket import create_connection, WebSocket
@@ -72,7 +65,7 @@ class TelegramSkill(MycroftSkill):
         # Connection to Telegram API
         self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
         self.telegram_dispatcher = self.telegram_updater.dispatcher
-        receive_handler = MessageHandler(Filters.text, self.TelegramMessages)
+        receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
         self.telegram_dispatcher.add_handler(receive_handler)
         self.telegram_updater.start_polling(clean=True) # start clean and look for messages
 
