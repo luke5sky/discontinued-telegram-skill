@@ -16,7 +16,7 @@
 
 import os
 
-import re
+#import re
 import logging
 import sys
 import telegram
@@ -83,6 +83,7 @@ class TelegramSkill(MycroftSkill):
            global speak_tele
            speak_tele = 1
            logger.info("Telegram-Message from User: " + msg)
+           msg = msg.replace('\\', ' ').replace('\"', '\\\"').replace('\'', '\\\'').replace('(', ' ').replace(')', ' ').replace('{', ' ').replace('}', ' ')
            self.add_event('recognizer_loop:audio_output_start', self.muteHandler)
            self.sendMycroftUtt(msg)
           
