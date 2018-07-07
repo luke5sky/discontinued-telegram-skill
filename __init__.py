@@ -77,6 +77,7 @@ class TelegramSkill(MycroftSkill):
            speak_tele = 1
            logger.info("Telegram-Message from User: " + msg)
            msg = msg.replace('\\', ' ').replace('\"', '\\\"').replace('\'', '\\\'').replace('(', ' ').replace(')', ' ').replace('{', ' ').replace('}', ' ')
+           msg = msg.casefold() # some skills need lowercase (eg. the cows list)
            self.add_event('recognizer_loop:audio_output_start', self.muteHandler)
            self.sendMycroftUtt(msg)
           
@@ -113,7 +114,7 @@ class TelegramSkill(MycroftSkill):
            wait_while_speaking()
            self.mixer.setvolume(volume_level)
            del volume_level
-           self.remove_event('recognizer_loop:audio_output_start')
+        self.remove_event('recognizer_loop:audio_output_start')
 
     def shutdown(self): # shutdown routine
         self.telegram_updater.stop() # will stop update and dispatcher
