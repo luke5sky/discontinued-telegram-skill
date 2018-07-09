@@ -119,6 +119,8 @@ class TelegramSkill(MycroftSkill):
     def shutdown(self): # shutdown routine
         self.telegram_updater.stop() # will stop update and dispatcher
         self.telegram_updater.is_idle = False
+        global speak_tele
+        speak_tele = 0
         super(TelegramSkill, self).shutdown()
 
     def stop(self):
