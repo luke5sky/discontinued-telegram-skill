@@ -40,7 +40,12 @@ class TelegramSkill(MycroftSkill):
 
     def initialize(self):
         self.mute = self.settings.get('MuteIt','')
-        self.mixer = Mixer()
+        if self.mute == 'true':
+           try:
+               self.mixer = Mixer()
+           except:
+               logger.info("There is a problem with alsaaudio, mute is not working!")
+               self.mute == 'false'
         self.add_event('telegram-skill:response', self.sendHandler)
         self.add_event('speak', self.responseHandler)
         user_id1 = self.settings.get('TeleID1', '')
