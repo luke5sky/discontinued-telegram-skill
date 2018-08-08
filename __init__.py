@@ -30,6 +30,7 @@ from mycroft.util.log import getLogger
 logger = getLogger(__name__)
 
 speak_tele = 0
+loaded = 0
 
 __author__ = 'luke5sky'
 
@@ -73,6 +74,15 @@ class TelegramSkill(MycroftSkill):
         receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
         self.telegram_dispatcher.add_handler(receive_handler)
         self.telegram_updater.start_polling(clean=True) # start clean and look for messages
+        wbot = telegram.Bot(token=self.bottoken)
+        global loaded # get global variable
+        if loaded == 0: # check if bot is just started
+           loaded = 1 # make sure that users gets this message only once bot is newly loaded
+           loadedmessage = "Telegram-Skill on Mycroft Unit \""+ UnitName + "\" is loaded and ready to use!" # give User a nice message
+           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 1
+           wbot.send_message(chat_id=user_id2, text=loadedmessage) # send welcome message to user 2
+#           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 3
+#           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 4
 
     def TelegramMessages(self, bot, update):
         msg = update.message.text
