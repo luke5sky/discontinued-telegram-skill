@@ -45,7 +45,9 @@ class TelegramSkill(MycroftSkill):
            try:
                self.mixer = Mixer()
            except:
+               msg = "There is a problem with alsaaudio, mute is not working!"
                logger.info("There is a problem with alsaaudio, mute is not working!")
+               self.sendMycroftSay(msg)
                self.mute == 'false'
         self.add_event('telegram-skill:response', self.sendHandler)
         self.add_event('speak', self.responseHandler)
@@ -66,7 +68,9 @@ class TelegramSkill(MycroftSkill):
            logger.debug("Found MyCroft Unit 2: " + UnitName)
            self.bottoken = self.settings.get('TeleToken2', '')
         else:
-           logger.info("No or incorrect Device Name specified! Your DeviceName is: " + UnitName)
+           msg = ("No or incorrect Device Name specified! Your DeviceName is: " + UnitName)
+           logger.info(msg)
+           self.sendMycroftSay(msg)
 
         # Connection to Telegram API
         self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
@@ -78,9 +82,17 @@ class TelegramSkill(MycroftSkill):
         global loaded # get global variable
         if loaded == 0: # check if bot is just started
            loaded = 1 # make sure that users gets this message only once bot is newly loaded
+           msg = "Telegram Skill is loaded"
+           self.sendMycroftSay(msg)
            loadedmessage = "Telegram-Skill on Mycroft Unit \""+ UnitName + "\" is loaded and ready to use!" # give User a nice message
-           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 1
-           wbot.send_message(chat_id=user_id2, text=loadedmessage) # send welcome message to user 2
+           try:
+              wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 1
+           except:
+              pass             
+           try:
+              wbot.send_message(chat_id=user_id2, text=loadedmessage) # send welcome message to user 2
+           except:
+              pass
 #           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 3
 #           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 4
 
@@ -108,12 +120,20 @@ class TelegramSkill(MycroftSkill):
         ws.send(utt)
         ws.close()
 
+    def sendMycroftSay(self, msg):
+        uri = 'ws://localhost:8181/core'
+        ws = create_connection(uri)
+        msg = "say " + msg
+        utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
+        ws.send(utt)
+        ws.close()
+
     def responseHandler(self, message):
         global speak_tele
         if speak_tele == 1:
            speak_tele = 0
            response = message.data.get("utterance")
-           self.emitter.emit(Message("telegram-skill:response", {"intent_name": "telegram-response", "utterance": response }))
+           self.bus.emit(Message("telegram-skill:response", {"intent_name": "telegram-response", "utterance": response }))
 
     def sendHandler(self, message):
         sendData = message.data.get("utterance")
