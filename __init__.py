@@ -40,15 +40,20 @@ class TelegramSkill(MycroftSkill):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
 
     def initialize(self):
-        self.mute = self.settings.get('MuteIt','')
-        if self.mute == 'true':
+        self.mute = str(self.settings.get('MuteIt',''))
+        if (self.mute == 'True') or (self.mute == 'true'):
            try:
                self.mixer = Mixer()
+               msg = "Telegram Messages will temporary Mute Mycroft"
+               logger.info(msg)
            except:
-               msg = "There is a problem with alsaaudio, mute is not working!"
+               msg = "There is a problem with alsa audio, mute is not working!"
                logger.info("There is a problem with alsaaudio, mute is not working!")
                self.sendMycroftSay(msg)
-               self.mute == 'false'
+               self.mute = 'false'
+        else:
+           logger.info("Telegram: Muting is off")
+           self.mute = "false"
         self.add_event('telegram-skill:response', self.sendHandler)
         self.add_event('speak', self.responseHandler)
         user_id1 = self.settings.get('TeleID1', '')
@@ -143,12 +148,10 @@ class TelegramSkill(MycroftSkill):
     
     def muteHandler(self, message):
         global speak_tele
-        if self.mute == 'true':
-           volume_level = self.mixer.getvolume()[0]
-           self.mixer.setvolume(0)
+        if (self.mute == 'true') or (self.mute == 'True'):
+           self.mixer.setmute(1)
            wait_while_speaking()
-           self.mixer.setvolume(volume_level)
-           del volume_level
+           self.mixer.setmute(0)
         self.remove_event('recognizer_loop:audio_output_start')
 
     def shutdown(self): # shutdown routine
