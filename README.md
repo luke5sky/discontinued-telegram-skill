@@ -37,7 +37,7 @@ Telegram documentation on botfather: https://core.telegram.org/bots#6-botfather
 
 - Go to home.mycroft.ai - skills and search for the telegram-skills settings
 
-- Copy/paste your token botfather gave you in the field MYCROFT DEVICE NAME (MANDATORY)
+- Copy/paste your token botfather gave you in the field BOT TOKEN (MANDATORY)
 
 - Copy/paste your device name from home.mycroft.ai - devices in MYCROFT DEVICE NAME (MANDATORY)
 
