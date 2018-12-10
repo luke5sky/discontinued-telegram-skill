@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO: Documentation
+# TODO: Documentation 
 
 
 import telegram
@@ -87,8 +87,9 @@ class TelegramSkill(MycroftSkill):
         global loaded # get global variable
         if loaded == 0: # check if bot is just started
            loaded = 1 # make sure that users gets this message only once bot is newly loaded
-           msg = "Telegram Skill is loaded"
-           self.sendMycroftSay(msg)
+           if self.mute == "false":
+              msg = "Telegram Skill is loaded"
+              self.sendMycroftSay(msg)
            loadedmessage = "Telegram-Skill on Mycroft Unit \""+ UnitName + "\" is loaded and ready to use!" # give User a nice message
            try:
               wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 1
