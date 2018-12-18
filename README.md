@@ -1,7 +1,8 @@
-## Telegram Skill
-Telegram Skill for MyCroft
+# <img src='https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/solid/telegram-plane.svg' card_color='#409DDB' width='50' height='50' style='vertical-align:bottom'/>
+ Telegram
+A skill to connect a telegram bot to MyCroft.
 
-## Description 
+## About 
 A skill to connect a telegram bot to MyCroft.
 
 You need to create a telegram bot (via BotFather) and save the Bot Token, your ChatID and your MyCroft Device name on home.mycroft.ai under skill settings.
@@ -52,7 +53,18 @@ Telegram documentation on botfather: https://core.telegram.org/bots#6-botfather
 
 - Your bot should send you this welcome message: Telegram-Skill on Mycroft Unit YOURUNIT is loaded and ready to use
 
-
+## Examples 
 
 ## Credits 
-Luke5Sky
+Lukas Gangel (@luke5sky)
+
+
+
+## Category
+IoT
+**Productivity**
+
+## Tags
+#messenger
+#bot
+#telegram-bot
