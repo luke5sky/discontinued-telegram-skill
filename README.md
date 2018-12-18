@@ -24,15 +24,15 @@ Detailed HowTo:
 - Install this skill on your Mycroft Device
 
 - Create a telegram bot:
-Open Telegram App on your smartphone, click on the search symbol in the upper right corner
-Search for BotFather and click on it
-Now type /newbot hit enter
-Botfather should reply with: Alright, a new bot. How are we going to call it? please chosse a name for your bot.
-Give your bot a displayname like Mycroft
-Botfather should reply with: Good. Now let's choose a username for your bot. It must end in bot. Like this, for example: TetrisBot or tetris-bot.
-Give your bot unique username like lukesmycroftbot
-Botfather should now give you your token for this bot
-Save this token and don't post it online or send it to people, safety first!
+Open Telegram App on your smartphone, click on the search symbol in the upper right corner<br/>
+Search for BotFather and click on it<br/>
+Now type /newbot hit enter<br/>
+Botfather should reply with: Alright, a new bot. How are we going to call it? please chosse a name for your bot.<br/>
+Give your bot a displayname like Mycroft<br/>
+Botfather should reply with: Good. Now let's choose a username for your bot. It must end in bot. Like this, for example: TetrisBot or tetris-bot.<br/>
+Give your bot unique username like lukesmycroftbot<br/>
+Botfather should now give you your token for this bot<br/>
+Save this token and don't post it online or send it to people, safety first!<br/>
 
 Telegram documentation on botfather: https://core.telegram.org/bots#6-botfather
 
@@ -52,8 +52,6 @@ Telegram documentation on botfather: https://core.telegram.org/bots#6-botfather
 - reboot your device to trigger the sync
 
 - Your bot should send you this welcome message: Telegram-Skill on Mycroft Unit YOURUNIT is loaded and ready to use
-
-## Examples 
 
 ## Credits 
 Lukas Gangel (@luke5sky)
