@@ -1,4 +1,4 @@
-# <img src='https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/solid/telegram-plane.svg' card_color='#409DDB' width='50' height='50' style='vertical-align:bottom'/> Telegram
+# <img src='https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/brands/telegram-plane.svg' card_color='#409DDB' width='50' height='50' style='vertical-align:bottom'/> Telegram
 A skill to connect a telegram bot to MyCroft.
 
 ## About 
