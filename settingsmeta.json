@@ -18,56 +18,56 @@
                     },
                     {
                         "name": "TeleToken1",
-                        "type": "Text",
+                        "type": "text",
                         "label": "Bot Token (mandatory)",
                         "value": "",
                         "placeholder": "Bot Token"
                     },
                     {
                         "name": "MDevice1",
-                        "type": "Text",
+                        "type": "text",
                         "label": "MyCroft Device Name (mandatory)",
                         "value": "",
                         "placeholder": "MyCroft Device Name"
                     },
                     {
                         "name": "TeleToken2",
-                        "type": "Text",
+                        "type": "text",
                         "label": "Bot Token second Mycroft Device (optional)",
                         "value": "",
                         "placeholder": "Bot Token"
                     },
                     {
                         "name": "MDevice2",
-                        "type": "Text",
+                        "type": "text",
                         "label": "Second MyCroft Device Name (if you have a second device)",
                         "value": "",
                         "placeholder": "MyCroft Device Name"
                     },
                     {
                         "name": "User1",
-                        "type": "Text",
+                        "type": "text",
                         "label": "Username 1 (optional)",
                         "value": "",
                         "placeholder": "Username for Chat ID 1"
                     },
                     {
                         "name": "TeleID1",
-                        "type": "Number",
+                        "type": "number",
                         "label": "Chat ID 1 (mandatory)",
                         "value": "",
                         "placeholder": "Chat ID"
                     },
                     {
                         "name": "User2",
-                        "type": "Text",
+                        "type": "text",
                         "label": "Username 2 (optional)",
                         "value": "",
                         "placeholder": "Username of Chat ID 2"
                     },
                     {
                         "name": "TeleID2",
-                        "type": "Number",
+                        "type": "number",
                         "label": "Chat ID 2 (if you have a second user)",
                         "value": "",
                         "placeholder": "Chat ID of second user"
