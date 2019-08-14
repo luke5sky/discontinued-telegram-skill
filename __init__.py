@@ -40,6 +40,7 @@ class TelegramSkill(MycroftSkill):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
 
     def initialize(self):
+        self.telegram_updater = None
         self.mute = str(self.settings.get('MuteIt',''))
         if (self.mute == 'True') or (self.mute == 'true'):
            try:
@@ -156,8 +157,9 @@ class TelegramSkill(MycroftSkill):
         self.remove_event('recognizer_loop:audio_output_start')
 
     def shutdown(self): # shutdown routine
-        self.telegram_updater.stop() # will stop update and dispatcher
-        self.telegram_updater.is_idle = False
+        if self.telegram_updater is not None:
+            self.telegram_updater.stop() # will stop update and dispatcher
+            self.telegram_updater.is_idle = False
         global speak_tele
         speak_tele = 0
         super(TelegramSkill, self).shutdown()
