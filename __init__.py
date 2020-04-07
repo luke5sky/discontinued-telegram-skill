@@ -35,11 +35,11 @@ loaded = 0
 __author__ = 'luke5sky'
 
 class TelegramSkill(MycroftSkill):
-
     def __init__(self):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
 
     def initialize(self):
+        self.telegram_updater = None
         self.mute = str(self.settings.get('MuteIt',''))
         if (self.mute == 'True') or (self.mute == 'true'):
            try:
@@ -78,12 +78,15 @@ class TelegramSkill(MycroftSkill):
            self.sendMycroftSay(msg)
 
         # Connection to Telegram API
-        self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
-        self.telegram_dispatcher = self.telegram_updater.dispatcher
-        receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
-        self.telegram_dispatcher.add_handler(receive_handler)
-        self.telegram_updater.start_polling(clean=True) # start clean and look for messages
-        wbot = telegram.Bot(token=self.bottoken)
+        try:
+           self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
+           self.telegram_dispatcher = self.telegram_updater.dispatcher
+           receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
+           self.telegram_dispatcher.add_handler(receive_handler)
+           self.telegram_updater.start_polling(clean=True) # start clean and look for messages
+           wbot = telegram.Bot(token=self.bottoken)
+        except:
+           pass
         global loaded # get global variable
         if loaded == 0: # check if bot is just started
            loaded = 1 # make sure that users gets this message only once bot is newly loaded
@@ -104,8 +107,8 @@ class TelegramSkill(MycroftSkill):
 
     def TelegramMessages(self, bot, update):
         msg = update.message.text
-        self.chat_id = str(update.message.chat_id)
-        if self.chat_id in self.chat_whitelist:
+        self.chat_id = update.message.chat_id
+        if self.chat_whitelist.count(self.chat_id) > 0 :
            global speak_tele
            speak_tele = 1
            logger.info("Telegram-Message from User: " + msg)
@@ -156,8 +159,9 @@ class TelegramSkill(MycroftSkill):
         self.remove_event('recognizer_loop:audio_output_start')
 
     def shutdown(self): # shutdown routine
-        self.telegram_updater.stop() # will stop update and dispatcher
-        self.telegram_updater.is_idle = False
+        if self.telegram_updater is not None:
+            self.telegram_updater.stop() # will stop update and dispatcher
+            self.telegram_updater.is_idle = False
         global speak_tele
         speak_tele = 0
         super(TelegramSkill, self).shutdown()
