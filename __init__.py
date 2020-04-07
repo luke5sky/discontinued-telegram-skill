@@ -35,7 +35,6 @@ loaded = 0
 __author__ = 'luke5sky'
 
 class TelegramSkill(MycroftSkill):
-
     def __init__(self):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
 
@@ -79,12 +78,15 @@ class TelegramSkill(MycroftSkill):
            self.sendMycroftSay(msg)
 
         # Connection to Telegram API
-        self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
-        self.telegram_dispatcher = self.telegram_updater.dispatcher
-        receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
-        self.telegram_dispatcher.add_handler(receive_handler)
-        self.telegram_updater.start_polling(clean=True) # start clean and look for messages
-        wbot = telegram.Bot(token=self.bottoken)
+        try:
+           self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
+           self.telegram_dispatcher = self.telegram_updater.dispatcher
+           receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
+           self.telegram_dispatcher.add_handler(receive_handler)
+           self.telegram_updater.start_polling(clean=True) # start clean and look for messages
+           wbot = telegram.Bot(token=self.bottoken)
+        except:
+           pass
         global loaded # get global variable
         if loaded == 0: # check if bot is just started
            loaded = 1 # make sure that users gets this message only once bot is newly loaded
