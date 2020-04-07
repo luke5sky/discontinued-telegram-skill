@@ -107,8 +107,9 @@ class TelegramSkill(MycroftSkill):
 
     def TelegramMessages(self, bot, update):
         msg = update.message.text
-        self.chat_id = update.message.chat_id
-        if self.chat_whitelist.count(self.chat_id) > 0 :
+        chat_id_test = update.message.chat_id
+        self.chat_id = str(update.message.chat_id)
+        if self.chat_whitelist.count(chat_id_test) > 0 :
            global speak_tele
            speak_tele = 1
            logger.info("Telegram-Message from User: " + msg)
