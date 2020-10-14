@@ -1,4 +1,4 @@
-# Copyright 2018 Lukas Gangel
+# Copyright 2020 Lukas Gangel
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -105,7 +105,8 @@ class TelegramSkill(MycroftSkill):
 #           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 3
 #           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 4
 
-    def TelegramMessages(self, bot, update):
+    #GALDEL def TelegramMessages(self, bot, update):
+    def TelegramMessages(self, update: Update, context: CallbackContext):
         msg = update.message.text
         chat_id_test = update.message.chat_id
         self.chat_id = str(update.message.chat_id)
