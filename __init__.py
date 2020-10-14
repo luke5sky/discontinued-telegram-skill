@@ -16,6 +16,7 @@
 
 
 import telegram
+from telegram import Update
 
 from alsaaudio import Mixer
 from mycroft.skills.core import MycroftSkill
@@ -79,7 +80,7 @@ class TelegramSkill(MycroftSkill):
 
         # Connection to Telegram API
         try:
-           self.telegram_updater = Updater(token=self.bottoken) # get telegram Updates
+           self.telegram_updater = Updater(token=self.bottoken, use_context=True) # get telegram Updates
            self.telegram_dispatcher = self.telegram_updater.dispatcher
            receive_handler = MessageHandler(Filters.text, self.TelegramMessages) # TODO: Make audio Files as Input possible: Filters.text | Filters.audio
            self.telegram_dispatcher.add_handler(receive_handler)
@@ -105,8 +106,7 @@ class TelegramSkill(MycroftSkill):
 #           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 3
 #           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 4
 
-    #GALDEL def TelegramMessages(self, bot, update):
-    def TelegramMessages(self, update: Update, context: CallbackContext):
+    def TelegramMessages(self, update, context):
         msg = update.message.text
         chat_id_test = update.message.chat_id
         self.chat_id = str(update.message.chat_id)
@@ -122,7 +122,7 @@ class TelegramSkill(MycroftSkill):
         else:
            logger.info("Chat ID " + self.chat_id + " is not whitelisted, i don't process it")
            nowhite = ("This is your ChatID: " + self.chat_id)
-           bot.send_message(chat_id=self.chat_id, text=nowhite)    
+           context.bot.send_message(chat_id=self.chat_id, text=nowhite)    
 
     def sendMycroftUtt(self, msg):
         uri = 'ws://localhost:8181/core'
