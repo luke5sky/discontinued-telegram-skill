@@ -1,5 +1,5 @@
 # <img src='https://raw.githack.com/FortAwesome/Font-Awesome/master/svgs/brands/telegram-plane.svg' card_color='#0088CC' width='50' height='50' style='vertical-align:bottom'/> Telegram
-A skill to connect a telegram bot to MyCroft.
+A skill to control your Mycroft instance through a TelegramBot.
 
 ## About 
 
