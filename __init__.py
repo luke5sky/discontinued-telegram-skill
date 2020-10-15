@@ -45,7 +45,16 @@ class TelegramSkill(MycroftSkill):
         self.settings_change_callback = self.on_settings_changed
         self.on_settings_changed()
         # end handling settings changes
-        
+        #try:
+        #   self.remove_event('telegram-skill:response')
+        #except:
+        #   pass
+        self.add_event('telegram-skill:response', self.sendHandler)
+        #try:
+        #   self.remove_event('speak')
+        #except:
+        #   pass
+        self.add_event('speak', self.responseHandler)
         # Connection to Telegram API
         try:
            self.telegram_updater = Updater(token=self.bottoken, use_context=True) # get telegram Updates
@@ -93,16 +102,7 @@ class TelegramSkill(MycroftSkill):
         else:
            logger.info("Telegram: Muting is off")
            self.mute = "false"
-        try:
-           self.remove_event('telegram-skill:response')
-        except:
-           pass
-        self.add_event('telegram-skill:response', self.sendHandler)
-        try:
-           self.remove_event('speak')
-        except:
-           pass
-        self.add_event('speak', self.responseHandler)
+        
         try:
             # Get Bot Token from settings.json
             self.UnitName = DeviceApi().get()['name']
@@ -150,20 +150,9 @@ class TelegramSkill(MycroftSkill):
 
     def sendMycroftUtt(self, msg):
         self.bus.emit(Message('recognizer_loop:utterance',{"utterances": [msg],"lang": self.lang}))#, "session": session_id}))
-        #uri = 'ws://localhost:8181/core'
-        #ws = create_connection(uri)
-        #utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
-        #ws.send(utt)
-        #ws.close()
 
     def sendMycroftSay(self, msg):
         self.bus.emit(Message('speak', {"utterance": msg,"lang": self.lang}))
-        #uri = 'ws://localhost:8181/core'
-        #ws = create_connection(uri)
-        #msg = "say " + msg
-        #utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
-        #ws.send(utt)
-        #ws.close()
 
     def responseHandler(self, message):
         global speak_tele
