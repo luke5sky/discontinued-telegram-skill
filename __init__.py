@@ -32,8 +32,7 @@ logger = getLogger(__name__)
 
 speak_tele = 0
 loaded = 0
-confbottoken = 0
-confchatid = 0
+audioinit = 0
 
 __author__ = 'luke5sky'
 
@@ -84,8 +83,9 @@ class TelegramSkill(MycroftSkill):
                msg = "Telegram Messages will temporary mute Mycroft"
                logger.info(msg)
            except:
-               global loaded
-               if loaded == 0:
+               global audioinit
+               if audioinit == 0:
+                  audioinit = 1
                   msg = "There is a problem with alsa audio, mute is not working!"
                   self.sendMycroftSay(msg)
                   logger.info("There is a problem with alsaaudio, mute is not working!")
