@@ -44,17 +44,9 @@ class TelegramSkill(MycroftSkill):
         # Handling settings changes 
         self.settings_change_callback = self.on_settings_changed
         self.on_settings_changed()
-        # end handling settings changes
-        #try:
-        #   self.remove_event('telegram-skill:response')
-        #except:
-        #   pass
         self.add_event('telegram-skill:response', self.sendHandler)
-        #try:
-        #   self.remove_event('speak')
-        #except:
-        #   pass
         self.add_event('speak', self.responseHandler)
+        
         # Connection to Telegram API
         try:
            self.telegram_updater = Updater(token=self.bottoken, use_context=True) # get telegram Updates
