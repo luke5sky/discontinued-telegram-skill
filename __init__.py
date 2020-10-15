@@ -32,6 +32,8 @@ logger = getLogger(__name__)
 
 speak_tele = 0
 loaded = 0
+confbottoken = 0
+confchatid = 0
 
 __author__ = 'luke5sky'
 
@@ -40,6 +42,11 @@ class TelegramSkill(MycroftSkill):
         super(TelegramSkill, self).__init__(name="TelegramSkill")
 
     def initialize(self):
+        # Handling settings changes 
+        self.settings_change_callback = self.on_settings_changed
+        self.on_settings_changed()
+        # end handling settings changes
+        
         self.telegram_updater = None
         self.mute = str(self.settings.get('MuteIt',''))
         if (self.mute == 'True') or (self.mute == 'true'):
@@ -57,26 +64,8 @@ class TelegramSkill(MycroftSkill):
            self.mute = "false"
         self.add_event('telegram-skill:response', self.sendHandler)
         self.add_event('speak', self.responseHandler)
-        user_id1 = self.settings.get('TeleID1', '')
-        user_id2 = self.settings.get('TeleID2', '')
-        #user_id3 = self.settings.get('TeleID3', '') # makes web-settings too crouded
-        #user_id4 = self.settings.get('TeleID4', '') # makes web-settings too crouded
-        self.chat_whitelist = [user_id1,user_id2] #,user_id3,user_id4] # makes web-settings too crouded
-        # Get Bot Token from settings.json
-        UnitName = DeviceApi().get()['name']
-        MyCroftDevice1 = self.settings.get('MDevice1','')
-        MyCroftDevice2 = self.settings.get('MDevice2','')
-        self.bottoken = ""
-        if MyCroftDevice1 == UnitName:
-           logger.debug("Found MyCroft Unit 1: " + UnitName)
-           self.bottoken = self.settings.get('TeleToken1', '')
-        elif MyCroftDevice2 == UnitName:
-           logger.debug("Found MyCroft Unit 2: " + UnitName)
-           self.bottoken = self.settings.get('TeleToken2', '')
-        else:
-           msg = ("No or incorrect Device Name specified! Your DeviceName is: " + UnitName)
-           logger.info(msg)
-           self.sendMycroftSay(msg)
+
+
 
         # Connection to Telegram API
         try:
@@ -89,23 +78,53 @@ class TelegramSkill(MycroftSkill):
         except:
            pass
         global loaded # get global variable
-        if loaded == 0: # check if bot is just started
+        if loaded == 0: # check if bot has just started
            loaded = 1 # make sure that users gets this message only once bot is newly loaded
            if self.mute == "false":
               msg = "Telegram Skill is loaded"
               self.sendMycroftSay(msg)
-           loadedmessage = "Telegram-Skill on Mycroft Unit \""+ UnitName + "\" is loaded and ready to use!" # give User a nice message
+           loadedmessage = "Telegram-Skill on Mycroft Unit \""+ self.UnitName + "\" is loaded and ready to use!" # give User a nice message
            try:
-              wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 1
+              wbot.send_message(chat_id=self.user_id1, text=loadedmessage) # send welcome message to user 1
            except:
               pass             
            try:
-              wbot.send_message(chat_id=user_id2, text=loadedmessage) # send welcome message to user 2
+              wbot.send_message(chat_id=self.user_id2, text=loadedmessage) # send welcome message to user 2
            except:
               pass
-#           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 3
-#           wbot.send_message(chat_id=user_id1, text=loadedmessage) # send welcome message to user 4
-
+            
+    # Handling settings changes
+    def on_settings_changed(self):
+        try:
+            # Get Bot Token from settings.json
+            self.UnitName = DeviceApi().get()['name']
+            MyCroftDevice1 = self.settings.get('MDevice1','')
+            MyCroftDevice2 = self.settings.get('MDevice2','')
+        except:
+            pass
+        try:
+            self.bottoken = ""
+            if MyCroftDevice1 == self.UnitName:
+               logger.debug("Found MyCroft Unit 1: " + self.UnitName)
+               self.bottoken = self.settings.get('TeleToken1', '')
+            elif MyCroftDevice2 == self.UnitName:
+               logger.debug("Found MyCroft Unit 2: " + self.UnitName)
+               self.bottoken = self.settings.get('TeleToken2', '')
+            else:
+               msg = ("No or incorrect Device Name specified! Your DeviceName is: " + self.UnitName)
+               logger.info(msg)
+               self.sendMycroftSay(msg)
+        except:
+            pass
+        try:
+            self.user_id1 = self.settings.get('TeleID1', '')
+            self.user_id2 = self.settings.get('TeleID2', '')
+            self.chat_whitelist = [self.user_id1,self.user_id2]
+        except:
+            pass
+           
+    # end handling settings changes
+    
     def TelegramMessages(self, update, context):
         msg = update.message.text
         chat_id_test = update.message.chat_id
