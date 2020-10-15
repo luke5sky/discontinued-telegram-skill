@@ -96,12 +96,14 @@ class TelegramSkill(MycroftSkill):
         try:
            self.remove_event('telegram-skill:response')
         except:
-           self.add_event('telegram-skill:response', self.sendHandler)
+           pass
+        self.add_event('telegram-skill:response', self.sendHandler)
         
         try:
            self.remove_event('speak')
         except:
-           self.add_event('speak', self.responseHandler)
+           pass
+        self.add_event('speak', self.responseHandler)
         
         try:
             # Get Bot Token from settings.json
