@@ -49,6 +49,11 @@ class TelegramSkill(MycroftSkill):
         
     # Handling settings changes
     def on_settings_changed(self):
+        if self.telegram_updater is not None:
+            self.telegram_updater.stop() # will stop update and dispatcher
+            self.telegram_updater.is_idle = False
+        global speak_tele
+        speak_tele = 0
         self.telegram_updater = None
         self.mute = str(self.settings.get('MuteIt',''))
         if (self.mute == 'True') or (self.mute == 'true'):
