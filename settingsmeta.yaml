@@ -19,17 +19,17 @@ skillMetadata:
             placeholder: Bot Token
           - name: MDevice1
             type: text
-            label: MyCroft Device Name (mandatory)
+            label: Device Name (case sensitive | mandatory)
             value: ""
             placeholder: MyCroft Device Name
           - name: User1
             type: text
-            label: First Username (optional)
+            label: Primary Username (optional)
             value: ""
             placeholder: Username for first Chat ID
           - name: TeleID1
             type: number
-            label: First Chat ID (mandatory)
+            label: Primary Chat ID (mandatory)
             value: ""
             placeholder: Chat ID
       - name: Optional second User
@@ -41,17 +41,17 @@ skillMetadata:
             placeholder: Username of second Chat ID
           - name: TeleID2
             type: number
-            label: Second Chat ID (if you have a second user)
+            label: Second Chat ID (optional)
             value: ""
             placeholder: Second Chat ID
       - name: Optional second Device
         fields:
           - name: TeleToken2
             type: text
-            label: Bot Token second Mycroft Device (optional)
+            label: Bot Token (optional)
             value: ""
             placeholder: Bot Token
           - name: MDevice2
             type: text
-            label: Second MyCroft Device Name (if you have a second device)
+            label: Device Name (case sensitive | optional)
             value: ""
