@@ -44,7 +44,9 @@ class TelegramSkill(MycroftSkill):
         # Handling settings changes 
         self.settings_change_callback = self.on_settings_changed
         self.on_settings_changed()
-                # Connection to Telegram API
+        # end handling settings changes
+        
+        # Connection to Telegram API
         try:
            self.telegram_updater = Updater(token=self.bottoken, use_context=True) # get telegram Updates
            self.telegram_dispatcher = self.telegram_updater.dispatcher
@@ -69,9 +71,7 @@ class TelegramSkill(MycroftSkill):
               wbot.send_message(chat_id=self.user_id2, text=loadedmessage) # send welcome message to user 2
            except:
               pass
-        # end handling settings changes
-        
-    # Handling settings changes
+
     def on_settings_changed(self):
         global speak_tele
         speak_tele = 0
@@ -98,13 +98,11 @@ class TelegramSkill(MycroftSkill):
         except:
            pass
         self.add_event('telegram-skill:response', self.sendHandler)
-        
         try:
            self.remove_event('speak')
         except:
            pass
         self.add_event('speak', self.responseHandler)
-        
         try:
             # Get Bot Token from settings.json
             self.UnitName = DeviceApi().get()['name']
@@ -132,8 +130,6 @@ class TelegramSkill(MycroftSkill):
             self.chat_whitelist = [self.user_id1,self.user_id2]
         except:
             pass
-           
-    # end handling settings changes
     
     def TelegramMessages(self, update, context):
         msg = update.message.text
@@ -146,27 +142,28 @@ class TelegramSkill(MycroftSkill):
            msg = msg.replace('\\', ' ').replace('\"', '\\\"').replace('(', ' ').replace(')', ' ').replace('{', ' ').replace('}', ' ')
            msg = msg.casefold() # some skills need lowercase (eg. the cows list)
            self.add_event('recognizer_loop:audio_output_start', self.muteHandler)
-           self.sendMycroftUtt(msg)
-          
+           self.sendMycroftUtt(msg) 
         else:
            logger.info("Chat ID " + self.chat_id + " is not whitelisted, i don't process it")
            nowhite = ("This is your ChatID: " + self.chat_id)
            context.bot.send_message(chat_id=self.chat_id, text=nowhite)    
 
     def sendMycroftUtt(self, msg):
-        uri = 'ws://localhost:8181/core'
-        ws = create_connection(uri)
-        utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
-        ws.send(utt)
-        ws.close()
+        self.bus.emit(Message('recognizer_loop:utterance',{"utterances": [msg],"lang": self.lang, "session": session_id}))
+        #uri = 'ws://localhost:8181/core'
+        #ws = create_connection(uri)
+        #utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
+        #ws.send(utt)
+        #ws.close()
 
     def sendMycroftSay(self, msg):
-        uri = 'ws://localhost:8181/core'
-        ws = create_connection(uri)
-        msg = "say " + msg
-        utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
-        ws.send(utt)
-        ws.close()
+        self.bus.emit(Message('speak', {"utterance": msg,"lang": self.lang}))
+        #uri = 'ws://localhost:8181/core'
+        #ws = create_connection(uri)
+        #msg = "say " + msg
+        #utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
+        #ws.send(utt)
+        #ws.close()
 
     def responseHandler(self, message):
         global speak_tele
