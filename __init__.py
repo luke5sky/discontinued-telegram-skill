@@ -74,9 +74,9 @@ class TelegramSkill(MycroftSkill):
         
     # Handling settings changes
     def on_settings_changed(self):
-        if self.telegram_updater is not None:
-            self.telegram_updater.stop() # will stop update and dispatcher
-            self.telegram_updater.is_idle = False
+        #if self.telegram_updater is not None:
+        #    self.telegram_updater.stop() # will stop update and dispatcher
+        #    self.telegram_updater.is_idle = False
         global speak_tele
         speak_tele = 0
         self.telegram_updater = None
@@ -94,8 +94,17 @@ class TelegramSkill(MycroftSkill):
         else:
            logger.info("Telegram: Muting is off")
            self.mute = "false"
+        try:
+           self.remove_event('telegram-skill:response')
+        except:
+           pass
         self.add_event('telegram-skill:response', self.sendHandler)
+        try:
+           self.remove_event('speak')
+        except:
+           pass
         self.add_event('speak', self.responseHandler)
+        
         try:
             # Get Bot Token from settings.json
             self.UnitName = DeviceApi().get()['name']
