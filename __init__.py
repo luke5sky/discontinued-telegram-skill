@@ -74,9 +74,6 @@ class TelegramSkill(MycroftSkill):
         
     # Handling settings changes
     def on_settings_changed(self):
-        #if self.telegram_updater is not None:
-        #    self.telegram_updater.stop() # will stop update and dispatcher
-        #    self.telegram_updater.is_idle = False
         global speak_tele
         speak_tele = 0
         self.telegram_updater = None
@@ -84,12 +81,14 @@ class TelegramSkill(MycroftSkill):
         if (self.mute == 'True') or (self.mute == 'true'):
            try:
                self.mixer = Mixer()
-               msg = "Telegram Messages will temporary Mute Mycroft"
+               msg = "Telegram Messages will temporary mute Mycroft"
                logger.info(msg)
            except:
-               msg = "There is a problem with alsa audio, mute is not working!"
-               logger.info("There is a problem with alsaaudio, mute is not working!")
-               self.sendMycroftSay(msg)
+               global loaded
+               if loaded == 0:
+                  msg = "There is a problem with alsa audio, mute is not working!"
+                  self.sendMycroftSay(msg)
+                  logger.info("There is a problem with alsaaudio, mute is not working!")
                self.mute = 'false'
         else:
            logger.info("Telegram: Muting is off")
@@ -97,13 +96,12 @@ class TelegramSkill(MycroftSkill):
         try:
            self.remove_event('telegram-skill:response')
         except:
-           pass
-        self.add_event('telegram-skill:response', self.sendHandler)
+           self.add_event('telegram-skill:response', self.sendHandler)
+        
         try:
            self.remove_event('speak')
         except:
-           pass
-        self.add_event('speak', self.responseHandler)
+           self.add_event('speak', self.responseHandler)
         
         try:
             # Get Bot Token from settings.json
