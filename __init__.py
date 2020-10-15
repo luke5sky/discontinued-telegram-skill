@@ -149,7 +149,7 @@ class TelegramSkill(MycroftSkill):
            context.bot.send_message(chat_id=self.chat_id, text=nowhite)    
 
     def sendMycroftUtt(self, msg):
-        self.bus.emit(Message('recognizer_loop:utterance',{"utterances": [msg],"lang": self.lang, "session": session_id}))
+        self.bus.emit(Message('recognizer_loop:utterance',{"utterances": [msg],"lang": self.lang}))#, "session": session_id}))
         #uri = 'ws://localhost:8181/core'
         #ws = create_connection(uri)
         #utt = '{"context": null, "type": "recognizer_loop:utterance", "data": {"lang": "' + self.lang + '", "utterances": ["' + msg + '"]}}'
